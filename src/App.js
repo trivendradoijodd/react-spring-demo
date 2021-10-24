@@ -5,9 +5,6 @@ import "./styles.css";
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-
       {Array(10)
         .fill(null)
         .map((_, index) => (
@@ -31,8 +28,8 @@ const AnimatedDiv = () => {
   const [fadeIn, setFadeIn] = useState(true);
 
   const transition = useTransition(fadeIn, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
+    from: { opacity: 0, x: -100, y: -100 },
+    enter: { opacity: 1, x: 0, y: 0 },
     leave: { opacity: 0 }
   });
 
