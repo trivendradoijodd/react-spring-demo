@@ -4,21 +4,11 @@ import "./styles.css";
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="main-body">
       {Array(10)
         .fill(null)
         .map((_, index) => (
-          // <span
-          //   className="list-item"
-          //   key={index}
-          //   style={{
-          //     display: "flex",
-          //     alignItems: "flex-end",
-          //     cursor: "pointer"
-          //   }}
-          // >
           <AnimatedDiv index={index} />
-          // </span>
         ))}
     </div>
   );
@@ -28,9 +18,9 @@ const AnimatedDiv = ({ index }) => {
   const [fadeIn, setFadeIn] = useState(true);
 
   const transition = useTransition(fadeIn, {
-    from: { opacity: 0, x: -100, y: -100 },
+    from: { opacity: 0, x: -100 },
     enter: { opacity: 1, x: 0, y: 0 },
-    leave: { opacity: 0, x: -100, y: -100 }
+    leave: { x: 100, opacity: 0 }
   });
 
   return (

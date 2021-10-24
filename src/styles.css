@@ -1,3 +1,7 @@
+.main-body {
+  overflow: hidden;
+}
+
 .list-item {
   position: relative;
   border: 1px solid lightgrey;
