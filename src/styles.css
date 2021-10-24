@@ -1,4 +1,24 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+.list-item {
+  position: relative;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+  background-color: lightgreen;
+}
+
+.list-item:hover {
+  background-color: lightcoral;
+  color: white;
+  border: 2px solid darkred;
+}
+
+.list-item:hover:after {
+  content: "tap to remove";
+  position: absolute;
+  right: 5px;
+}
+
+* {
+  box-sizing: border-box;
 }
