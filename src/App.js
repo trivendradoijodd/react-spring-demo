@@ -1,20 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTransition, animated } from "react-spring";
 import "./styles.css";
 
 const App = () => {
+  const [timeSpent, setTimeSpent] = useState(0);
+
+  const [isTimerPaused, setIsPaused] = useState(false);
+
+  const timeRef = useRef();
+
+  const startTimer = () => {
+    const _interval = setInterval(() => {
+      setTimeSpent((_timeSpent) => setTimeSpent(_timeSpent + 1));
+    }, 1000);
+
+    timeRef.current = _interval;
+  };
+
+  const clearTimer = () => {
+    clearInterval(timeRef.current);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearTimer();
+  }, []);
+
+  const continueOrPause = () => {
+    isTimerPaused ? startTimer() : clearTimer();
+    setIsPaused(!isTimerPaused);
+  };
+
   return (
     <div className="main-body">
+      <div>
+        Time spent on this page: {timeSpent}s{" "}
+        <button onClick={continueOrPause}>
+          {isTimerPaused ? "Continue" : "Freeze"}
+        </button>
+      </div>
       {Array(10)
         .fill(null)
         .map((_, index) => (
-          <AnimatedDiv index={index} />
+          <AnimatedDiv isTimerPaused={isTimerPaused} index={index} />
         ))}
     </div>
   );
 };
 
-const AnimatedDiv = ({ index }) => {
+const AnimatedDiv = ({ index, isTimerPaused }) => {
   const [fadeIn, setFadeIn] = useState(true);
 
   const transition = useTransition(fadeIn, {
@@ -30,9 +64,13 @@ const AnimatedDiv = ({ index }) => {
           <animated.div
             className="list-item"
             style={style}
-            onClick={() => setFadeIn(!fadeIn)}
+            onClick={() => {
+              if (isTimerPaused) return;
+              setFadeIn(!fadeIn);
+            }}
           >
             {index + 1}&nbsp; This can get animated{" "}
+            {isTimerPaused && " after timer is started"}
           </animated.div>
         ) : null
       )}
